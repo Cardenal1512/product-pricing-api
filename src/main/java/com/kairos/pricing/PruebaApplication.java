@@ -1,4 +1,4 @@
-package com.kairos.prueba;
+package com.kairos.pricing;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

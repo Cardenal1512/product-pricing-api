@@ -1,4 +1,4 @@
-package com.kairos.prueba;
+package com.kairos.pricing;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
