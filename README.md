@@ -8,13 +8,13 @@ according to business rules (date range + highest priority).
 
 ## 1. Tech Stack
 
-| Layer        | Choice                            | Notes                              |
-|--------------|-----------------------------------|------------------------------------|
-| Language     | **Java 17**                       |                                    |
-| Framework    | **Spring Boot 3**                 |                                    |
+| Layer        | Choice                                      | Notes                              |
+|--------------|---------------------------------------------|------------------------------------|
+| Language     | **Java 21**                                 |                                    |
+| Framework    | **Spring Boot 3**                           |                                    |
 | Mapping      | **MapStruct 1.5** (`componentModel=spring`) |                                    |
-| Persistence  | Spring Data JPA + H2 (dev/tests)  |      |
-| Testing      | JUnit 5, Mockito, AssertJ         |                                    |
+| Persistence  | Spring Data JPA + H2 (dev/tests)            |      |
+| Testing      | JUnit 5, Mockito, AssertJ                   |                                    |
 
 
 ## 2. Architecture Overview
