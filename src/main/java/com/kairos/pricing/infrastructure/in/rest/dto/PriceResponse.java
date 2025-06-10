@@ -1,9 +1,6 @@
-package com.kairos.pricing.domain.model;
+package com.kairos.pricing.infrastructure.in.rest.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -12,13 +9,13 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Price {
+public class PriceResponse {
     private Long productId;
     private Long brandId;
     private Integer priceList;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
-    private Integer priority;
     private BigDecimal price;
+    private Integer priority;
     private String currency;
 }
