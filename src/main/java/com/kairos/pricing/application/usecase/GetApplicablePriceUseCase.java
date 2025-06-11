@@ -1,5 +1,6 @@
 package com.kairos.pricing.application.usecase;
 
+import com.kairos.pricing.domain.expetion.PriceNotFoundException;
 import com.kairos.pricing.domain.model.Price;
 import com.kairos.pricing.domain.port.out.PriceRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class GetApplicablePriceUseCase {
                 })
                 .orElseThrow(() -> {
                     log.error("No applicable price could be selected from candidates.");
-                    return new RuntimeException("No applicable price found");
+                    return new PriceNotFoundException("No applicable price found");
                 });
     }
 
