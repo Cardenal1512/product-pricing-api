@@ -46,7 +46,7 @@ public class PriceControllerTest {
         PriceResponse response = controller.getApplicablePrice(
                 "2020-06-14T16:00:00",
                 35425L,
-                1L);
+                1L).getBody();
         assertEquals(2, response.getPriceList());
 
         assertEquals(25.50, response.getPrice().doubleValue());
