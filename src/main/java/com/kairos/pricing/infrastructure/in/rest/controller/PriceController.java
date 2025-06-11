@@ -28,10 +28,10 @@ public class PriceController {
             @RequestParam(required = false) String date,
             @RequestParam(required = false) Long productId,
             @RequestParam(required = false) Long brandId
-    ) throws BadRequestException {
+    ) {
         priceRequestValidator.validatePriceRequestParams(productId, brandId, date);
         LocalDateTime parsedDate = priceRequestValidator.parseDate(date);
-        
+
         Price price = getApplicablePriceUseCase.execute(parsedDate, productId, brandId);
         return priceResponseMapper.toDto(price);
     }

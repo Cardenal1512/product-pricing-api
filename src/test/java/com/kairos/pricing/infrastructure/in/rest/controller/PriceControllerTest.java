@@ -38,7 +38,7 @@ public class PriceControllerTest {
     private PriceResponseMapper mapper = Mappers.getMapper(PriceResponseMapper.class);
 
     @Test
-    void should_return_expected_price_response() throws Exception {
+    void should_return_expected_price_response() {
 
         Price price = mockPrice();
         when(useCase.execute(any(), eq(35425L), eq(1L))).thenReturn(price);
@@ -61,19 +61,6 @@ public class PriceControllerTest {
                 .productId(35455L)
                 .priority(0)
                 .price(new BigDecimal("25.50"))
-                .currency("EUR")
-                .build();
-    }
-
-    private PriceResponse mockPriceResponse() {
-        return PriceResponse.builder()
-                .brandId(1L)
-                .startDate(LocalDateTime.parse("2020-06-14T00:00:00"))
-                .endDate(LocalDateTime.parse("2020-12-31T23:59:59"))
-                .priceList(2)
-                .productId(35455L)
-                .priority(0)
-                .price(new BigDecimal("25.45"))
                 .currency("EUR")
                 .build();
     }
