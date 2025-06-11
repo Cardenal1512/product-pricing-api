@@ -72,4 +72,22 @@ public class PriceRequestValidatorTest {
         );
         assertEquals("Invalid date format. Expected format: yyyy-MM-dd'T'HH:mm:ss", ex.getMessage());
     }
+
+    @Test
+    void should_throw_when_product_id_and_date_are_missing() {
+        RequestParamException ex = assertThrows(
+                RequestParamException.class,
+                () -> validator.validatePriceRequestParams(null, 1L, null)
+        );
+        assertEquals("Missing required parameters: productId, date", ex.getMessage());
+    }
+
+    @Test
+    void should_throw_when_all_parameters_are_missing() {
+        RequestParamException ex = assertThrows(
+                RequestParamException.class,
+                () -> validator.validatePriceRequestParams(null, null, null)
+        );
+        assertEquals("Missing required parameters: productId, brandId, date", ex.getMessage());
+    }
 }
