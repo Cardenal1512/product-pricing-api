@@ -57,7 +57,8 @@ class PriceIntegrationTest {
         mockMvc.perform(get("/prices")
                         .param("date", "2020-06-14T10:00:00")
                         .param("brandId", "1"))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Missing required parameter: productId"));
     }
 
     @Test
@@ -65,7 +66,8 @@ class PriceIntegrationTest {
         mockMvc.perform(get("/prices")
                         .param("date", "2020-06-14T10:00:00")
                         .param("productId", "35455"))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Missing required parameter: brandId"));
     }
 
     @Test
@@ -73,16 +75,49 @@ class PriceIntegrationTest {
         mockMvc.perform(get("/prices")
                         .param("productId", "35455")
                         .param("brandId", "1"))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Missing required parameter: date"));
     }
 
     @Test
     void should_return_404_when_no_price_found() throws Exception {
         mockMvc.perform(get("/prices")
-                        .param("date", "2030-01-01T00:00:00")   // fuera de rango
+                        .param("date", "2030-01-01T00:00:00")
                         .param("productId", "35455")
                         .param("brandId", "1"))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value("No applicable price found"));
     }
+
+    @Test
+    void should_return_400_when_product_id_is_not_a_number() throws Exception {
+        mockMvc.perform(get("/prices")
+                        .param("date", "2020-06-14T10:00:00")
+                        .param("productId", "e")  // tipo incorrecto
+                        .param("brandId", "1"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Invalid value 'e' for parameter 'productId'. Expected type: Long"));
+    }
+
+    @Test
+    void should_return_400_when_brand_id_is_not_a_number() throws Exception {
+        mockMvc.perform(get("/prices")
+                        .param("date", "2020-06-14T10:00:00")
+                        .param("productId", "35455")
+                        .param("brandId", "e"))  // tipo incorrecto
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Invalid value 'e' for parameter 'brandId'. Expected type: Long"));
+    }
+
+    @Test
+    void should_return_400_when_date_is_malformed() throws Exception {
+        mockMvc.perform(get("/prices")
+                        .param("date", "12//06//2025")  // mal formato
+                        .param("productId", "35455")
+                        .param("brandId", "1"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Invalid date format: '12//06//2025'. Expected ISO format: yyyy-MM-dd'T'HH:mm:ss"));
+    }
+
 }
 

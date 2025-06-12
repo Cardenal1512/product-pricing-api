@@ -1,16 +1,15 @@
 package com.kairos.pricing.infrastructure.in.rest.controller;
 
 import com.kairos.pricing.application.usecase.GetApplicablePriceUseCase;
-import com.kairos.pricing.application.validator.PriceRequestValidator;
 import com.kairos.pricing.domain.model.Price;
 import com.kairos.pricing.infrastructure.in.rest.dto.PriceResponse;
 import com.kairos.pricing.infrastructure.in.rest.mapper.PriceResponseMapper;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mapstruct.factory.Mappers;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -31,9 +30,6 @@ public class PriceControllerTest {
     @Mock
     private GetApplicablePriceUseCase useCase;
 
-    @Mock
-    private PriceRequestValidator priceRequestValidator;
-
     @Spy
     private PriceResponseMapper mapper = Mappers.getMapper(PriceResponseMapper.class);
 
@@ -42,11 +38,11 @@ public class PriceControllerTest {
 
         Price price = mockPrice();
         when(useCase.execute(any(), eq(35425L), eq(1L))).thenReturn(price);
-        when(priceRequestValidator.parseDate(Mockito.anyString())).thenReturn(LocalDateTime.parse("2020-06-14T16:00:00"));
         PriceResponse response = controller.getApplicablePrice(
-                "2020-06-14T16:00:00",
+                LocalDateTime.parse("2020-06-14T16:00:00"),
                 35425L,
                 1L).getBody();
+        Assertions.assertNotNull(response);
         assertEquals(2, response.getPriceList());
 
         assertEquals(25.50, response.getPrice().doubleValue());
